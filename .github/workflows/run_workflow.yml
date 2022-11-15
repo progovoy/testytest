@@ -29,4 +29,4 @@ jobs:
      
     - name: Publish a Python distribution to PyPI
       run: |
-        echo "${outputs.verstr}"
+        echo "${{outputs.verstr}}"
