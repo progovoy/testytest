@@ -25,7 +25,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - id: foo
-      uses: progovoy/vmn-stamp-action@vmn_stamp_action_0.6.
+      uses: progovoy/vmn-stamp-action@vmn_stamp_action_0.6.16
       with:
         release-mode: ${{inputs.version_type}}
         app-name: ${{inputs.app_name}}
