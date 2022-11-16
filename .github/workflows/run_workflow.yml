@@ -22,9 +22,7 @@ jobs:
   build_pkg:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+    - uses: actions/checkout@v2.5.0
 
     - id: foo
       uses: progovoy/vmn-stamp-action@vmn_stamp_action_0.6.19
