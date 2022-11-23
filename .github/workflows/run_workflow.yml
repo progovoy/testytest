@@ -8,14 +8,14 @@ on:
     inputs:
       version_type:
         type: choice
-        description: Version type
+        description: Release mode
         options:
         - patch
         - minor
         - major
         required: true
       app_name:
-        description: Version type
+        description: App name
         required: true
 
 jobs:
@@ -25,11 +25,11 @@ jobs:
     - uses: actions/checkout@v2.5.0
 
     - id: foo
-      uses: progovoy/vmn-stamp-action@vmn_stamp_action_0.6.20
+      uses: progovoy/vmn-action@vmna_0.0.1
       with:
         release-mode: ${{inputs.version_type}}
         app-name: ${{inputs.app_name}}
      
-    - name: Publish a Python distribution to PyPI
+    - name: Use the output from vmn action
       run: |
         echo "${{steps.foo.outputs.verstr}}"
