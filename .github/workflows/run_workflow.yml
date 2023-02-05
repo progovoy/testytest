@@ -10,6 +10,7 @@ on:
         type: choice
         description: Stamp mode
         options:
+        - none
         - patch
         - minor
         - major
@@ -32,7 +33,7 @@ jobs:
     - uses: actions/checkout@v2.5.0
 
     - id: foo
-      uses: progovoy/vmn-action@vmna_0.1.15
+      uses: progovoy/vmn-action@vmna_0.1.16
       with:
         release-candidate: ${{inputs.release_candidate}}
         release: ${{inputs.release}}
