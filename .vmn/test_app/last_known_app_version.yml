@@ -1,4 +1,3 @@
-prerelease: yuval
-prerelease_count:
-  yuval: 3
-version_to_stamp_from: 0.0.463
+prerelease: release
+prerelease_count: {}
+version_to_stamp_from: 0.0.464
