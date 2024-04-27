@@ -6,41 +6,63 @@ name: test
 on:
   workflow_dispatch:
     inputs:
-      version_type:
-        type: choice
-        description: Stamp mode
-        options:
-        - none
-        - patch
-        - minor
-        - major
-      prerelease_name:
-        description: Prerelease name
-      release_candidate:
-        description: Is it Release Candidate
-        type: boolean
-      release:
-        description: Do you want to Release
-        type: boolean
-      app_name:
-        description: App name
-        required: true
+        stamp_type:
+          description: 'Stamp Type'
+          required: true
+          type: choice
+          options:
+          - none
+          - major
+          - minor
+          - patch
+          default: 'patch'
+        release_candidate:
+          description: 'Is It Release Candidate?'
+          type: boolean
+        release:
+          description: 'Is It Ready To Be Released?'
+          type: boolean
+        prerelease_name:
+          description: 'Prerelease Name'
+          type: string
+        stamp_from_version:
+          description: 'Overwrite Base Version'
+          type: string
+        manual_params:
+          description: 'Do you want to bypass auto params to VMNA? (Not recommended)'
+          type: boolean
+        show_log_on_error:
+          description: 'Show Logs On Error?'
+          type: boolean
+        debug_mode:
+          description: 'Use Debug Mode?'
+          type: boolean
 
 jobs:
   build_pkg:
     runs-on: ubuntu-latest
+    env:
+      VMN_APP_NAME: testytest
     steps:
     - uses: actions/checkout@v2.5.0
 
-    - id: foo
-      uses: progovoy/vmn-action@vmna_0.1.24
+    - id: vmna-stamp
+      name: Stamp Version
+      uses: progovoy/vmn-action@vmna_0.1.78
       with:
-        release-candidate: ${{inputs.release_candidate}}
-        release: ${{inputs.release}}
-        prerelease-name: ${{inputs.prerelease_name}}
-        stamp-mode: ${{inputs.version_type}}
-        app-name: ${{inputs.app_name}}
+        app-name: ${{ env.VMN_APP_NAME }}
+        do-stamp: true
+        stamp-mode: ${{ inputs.stamp_type }}
+        release-candidate: ${{ inputs.release_candidate }}
+        release: ${{ inputs.release }}
+        stamp-from-version: ${{ inputs.stamp_from_version }}
+        prerelease-name: ${{ inputs.prerelease_name }}
+        debug-mode: ${{ inputs.debug_mode }}
+        show-log-on-error: ${{ inputs.show_log_on_error }}
+        install-nonstable-vmn-version: true
+      env:
+        GITHUB_TOKEN: ${{ github.token }} 
      
     - name: Use the output from vmn action
       run: |
-        echo "${{steps.foo.outputs.verstr}}"
+        echo "${{steps.vmna-stamp.outputs.verstr}}"
