@@ -61,7 +61,7 @@ jobs:
         show-log-on-error: ${{ inputs.show_log_on_error }}
         install-nonstable-vmn-version: true
       env:
-        GITHUB_TOKEN: ${{ github.token }} 
+        GITHUB_TOKEN: ${{ secrets.VMN_AUTH_USER }} 
      
     - name: Use the output from vmn action
       run: |
